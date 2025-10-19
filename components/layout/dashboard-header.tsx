@@ -23,7 +23,7 @@ export default function DashboardHeader() {
           <Star className="h-4 w-4" />
         </Button>
 
-        <Breadcrumb>
+        <Breadcrumb className="hidden md:block">
           <BreadcrumbList>
             <BreadcrumbItem className="hidden md:block">
               <BreadcrumbLink href="#">Dashboards</BreadcrumbLink>

@@ -4,6 +4,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { PanelRightIcon } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const ACTIVITIES_SIDEBAR_COOKIE_NAME = "activities_sidebar_state";
 const ACTIVITIES_SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -12,6 +13,7 @@ type ActivitiesSidebarContextProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
   toggleSidebar: () => void;
+  isMobile: boolean;
 };
 
 const ActivitiesSidebarContext =
@@ -34,6 +36,8 @@ export function ActivitiesSidebarProvider({
   defaultOpen?: boolean;
   children: React.ReactNode;
 }) {
+  const isMobile = useIsMobile();
+
   // Read initial state from cookie
   const [open, setOpenState] = React.useState(() => {
     if (typeof document !== "undefined") {
@@ -44,14 +48,20 @@ export function ActivitiesSidebarProvider({
         return cookie.split("=")[1] === "true";
       }
     }
+    // On mobile, default to closed; on desktop, use defaultOpen
     return defaultOpen;
   });
 
-  const setOpen = React.useCallback((value: boolean) => {
-    setOpenState(value);
-    // Save state to cookie
-    document.cookie = `${ACTIVITIES_SIDEBAR_COOKIE_NAME}=${value}; path=/; max-age=${ACTIVITIES_SIDEBAR_COOKIE_MAX_AGE}`;
-  }, []);
+  const setOpen = React.useCallback(
+    (value: boolean) => {
+      setOpenState(value);
+      // Only save state to cookie on desktop
+      if (!isMobile) {
+        document.cookie = `${ACTIVITIES_SIDEBAR_COOKIE_NAME}=${value}; path=/; max-age=${ACTIVITIES_SIDEBAR_COOKIE_MAX_AGE}`;
+      }
+    },
+    [isMobile]
+  );
 
   const toggleSidebar = React.useCallback(() => {
     setOpen(!open);
@@ -62,8 +72,9 @@ export function ActivitiesSidebarProvider({
       open,
       setOpen,
       toggleSidebar,
+      isMobile,
     }),
-    [open, setOpen, toggleSidebar]
+    [open, setOpen, toggleSidebar, isMobile]
   );
 
   return (
