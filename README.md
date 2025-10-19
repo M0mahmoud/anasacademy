@@ -2,6 +2,27 @@
 
 A modern, responsive dashboard application built with Next.js 15, React 19, TypeScript, Tailwind CSS 4, and shadcn/ui components.
 
+## ⚠️ Important Notes
+
+### Design & Implementation Focus
+
+> **Note**: This implementation prioritizes **clean code structure**, **component architecture**, and **functionality** over pixel-perfect design matching.
+
+**Icons & Colors**: The icons and color schemes may differ from the original Figma design. The focus was on creating a functional, well-structured codebase rather than exact visual replication.
+
+**Automatic Dark/Light Mode**: The application is built using **shadcn/ui CSS variables**, which means dark and light mode theming will work automatically without additional configuration. Simply toggle the theme, and all components will adapt seamlessly.
+
+**Scalable Architecture**: The component structure is designed for easy customization. Icons, colors, and styling can be updated globally by modifying the CSS variables in `globals.css` or individual component props.
+
+### Development Priorities
+
+1. ✅ Clean, maintainable code structure
+2. ✅ TypeScript type safety
+3. ✅ Responsive design patterns
+4. ✅ Component reusability
+5. ✅ Performance optimization
+6. ⏳ Pixel-perfect design matching (can be refined later)
+
 ## 🚀 Features
 
 ### 📊 Dashboard Analytics
@@ -257,6 +278,39 @@ import ActivitiesSidebar from "@/components/activities/activities-sidebar";
 - `next.config.ts`: Next.js configuration
 - `tailwind.config.ts`: Tailwind CSS configuration (v4)
 - `postcss.config.mjs`: PostCSS configuration
+
+## 🎨 Theming System
+
+### Automatic Dark/Light Mode
+
+The application uses **shadcn/ui's CSS variable-based theming system**, which provides automatic dark and light mode support without additional configuration.
+
+**How it works:**
+
+- All colors are defined as CSS variables in `app/globals.css`
+- Components reference these variables (e.g., `bg-background`, `text-foreground`)
+- When theme mode changes, variables automatically update
+- No hardcoded colors in components = seamless theme switching
+
+### Customizing Colors
+
+To modify the color scheme, update the CSS variables in `app/globals.css`:
+
+```css
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --primary: oklch(0.646 0.222 41.116);
+  /* ... more variables */
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.98 0 0);
+  --primary: oklch(0.488 0.243 264.376);
+  /* ... more variables */
+}
+```
 
 ## 📊 Chart Configuration
 
