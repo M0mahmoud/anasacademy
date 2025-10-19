@@ -12,7 +12,7 @@ export default function DashboardLayout({
 }>) {
   return (
     <SidebarProvider>
-      <ActivitiesSidebarProvider>
+      <ActivitiesSidebarProvider defaultOpen={false}>
         <AppSidebar />
         <SidebarInset>
           <div className="flex">
