@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/sidebar";
 import { NavMain } from "./nav-main";
 import Image from "next/image";
+import QuickTabs from "./quik-tabs";
 
 const data = {
   navMain: [
@@ -84,14 +85,6 @@ const data = {
           url: "/pages/profile",
         },
         {
-          title: "Campaigns",
-          url: "/pages/profile",
-        },
-        {
-          title: "Documents",
-          url: "/pages/profile",
-        },
-        {
           title: "Followers",
           url: "/pages/profile",
         },
@@ -150,6 +143,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader className="flex gap-1 flex-row p-4">
         <Image src={"/avatar.png"} width={24} height={24} alt="Logo" />
       </SidebarHeader>
+
+      <QuickTabs />
+
       <SidebarContent>
         <NavMain items={data.navMain} title="Dashboard" />
         <NavMain items={data.pages} title="Pages" />
