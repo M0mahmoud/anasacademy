@@ -13,15 +13,10 @@ import {
   GraduationCap,
 } from "lucide-react";
 
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
 import { NavMain } from "./nav-main";
-import Image from "next/image";
 import QuickTabs from "./quik-tabs";
+import HeadSidebar from "./head-sidebar";
 
 const data = {
   navMain: [
@@ -140,10 +135,7 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader className="flex gap-1 flex-row p-4">
-        <Image src={"/avatar.png"} width={24} height={24} alt="Logo" />
-      </SidebarHeader>
-
+      <HeadSidebar />
       <QuickTabs />
 
       <SidebarContent>
