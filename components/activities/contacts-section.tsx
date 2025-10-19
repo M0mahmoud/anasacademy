@@ -37,7 +37,7 @@ export default function ContactsSection() {
   return (
     <div>
       <h2 className="text-xl font-semibold mb-6 text-gray-900">Contacts</h2>
-      <div className="space-y-4">
+      <div className="space-y-4 py-4">
         {contacts.map((contact) => (
           <div key={contact.id} className="flex items-center gap-3">
             <div className="flex-shrink-0">

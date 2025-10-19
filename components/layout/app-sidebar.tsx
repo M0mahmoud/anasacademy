@@ -32,9 +32,13 @@ const data = {
     },
     {
       title: "eCommerce",
-      url: "/dashboard/ecommerce",
+      url: "#",
       icon: ShoppingCart,
       items: [
+        {
+          title: "Overview",
+          url: "/dashboard/ecommerce",
+        },
         {
           title: "Products",
           url: "/dashboard/ecommerce/products",
@@ -48,11 +52,7 @@ const data = {
       items: [
         {
           title: "Overview",
-          url: "/dashboard/projects/overview",
-        },
-        {
-          title: "Tasks",
-          url: "/dashboard/projects/tasks",
+          url: "/dashboard/projects",
         },
       ],
     },
@@ -63,7 +63,7 @@ const data = {
       items: [
         {
           title: "My Courses",
-          url: "/dashboard/courses/my-courses",
+          url: "/dashboard/courses",
         },
       ],
     },
@@ -77,23 +77,23 @@ const data = {
       items: [
         {
           title: "Overview",
-          url: "/pages/profile/overview",
+          url: "/pages/profile",
         },
         {
           title: "Projects",
-          url: "/pages/profile/projects",
+          url: "/pages/profile",
         },
         {
           title: "Campaigns",
-          url: "/pages/profile/campaigns",
+          url: "/pages/profile",
         },
         {
           title: "Documents",
-          url: "/pages/profile/documents",
+          url: "/pages/profile",
         },
         {
           title: "Followers",
-          url: "/pages/profile/followers",
+          url: "/pages/profile",
         },
       ],
     },

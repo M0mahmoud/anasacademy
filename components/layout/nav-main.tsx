@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronRight, type LucideIcon } from "lucide-react";
+import Link from "next/link";
 
 import {
   Collapsible,
@@ -43,53 +44,83 @@ export function NavMain({
         {title}
       </SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
-          <Collapsible
-            key={item.title}
-            asChild
-            defaultOpen={item.isActive}
-            className="group/collapsible"
-          >
-            <SidebarMenuItem>
-              <CollapsibleTrigger
-                asChild
-                className={cn(
-                  "cursor-pointer relative",
-                  pathname === item.url &&
-                    "bg-gray-200 dark:bg-gray-700 font-mediums"
-                )}
-              >
-                <SidebarMenuButton tooltip={item.title}>
-                  {pathname === item.url && (
-                    <span className="absolute left-1 w-1 h-[70%] bg-black rounded-full" />
-                  )}
-                  <ChevronRight
-                    className={cn(
-                      "transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 text-black/20",
-                      item.items ? "opacity-100" : "opacity-0"
-                    )}
-                  />
+        {items.map((item) => {
+          const isActive = pathname === item.url;
+          const hasSubItems = item.items && item.items.length > 0;
 
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
+          // Check if any subitem matches the current path (for parent highlighting)
+          const isSubItemActive =
+            hasSubItems &&
+            item.items?.some((subItem) => pathname === subItem.url);
+          const shouldHighlightParent = isActive || isSubItemActive;
+
+          if (!hasSubItems) {
+            return (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton
+                  tooltip={item.title}
+                  asChild
+                  className={cn(
+                    "cursor-pointer relative",
+                    isActive && "bg-gray-200 dark:bg-gray-700 font-medium"
+                  )}
+                >
+                  <Link href={item.url}>
+                    {isActive && (
+                      <span className="absolute left-1 w-1 h-[70%] bg-black rounded-full" />
+                    )}
+                    <ChevronRight className="opacity-0 transition-transform duration-200 text-black/20" />
+                    {item.icon && <item.icon />}
+                    <span>{item.title}</span>
+                  </Link>
                 </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  {item.items?.map((subItem) => (
-                    <SidebarMenuSubItem key={subItem.title}>
-                      <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
-                          <span>{subItem.title}</span>
-                        </a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  ))}
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </SidebarMenuItem>
-          </Collapsible>
-        ))}
+              </SidebarMenuItem>
+            );
+          }
+
+          // If has subitems, render as collapsible
+          return (
+            <Collapsible
+              key={item.title}
+              asChild
+              defaultOpen={item.isActive || shouldHighlightParent}
+              className="group/collapsible"
+            >
+              <SidebarMenuItem>
+                <CollapsibleTrigger
+                  asChild
+                  className={cn(
+                    "cursor-pointer relative",
+                    shouldHighlightParent &&
+                      "bg-gray-200 dark:bg-gray-700 font-medium"
+                  )}
+                >
+                  <SidebarMenuButton tooltip={item.title}>
+                    {shouldHighlightParent && (
+                      <span className="absolute left-1 w-1 h-[70%] bg-black rounded-full" />
+                    )}
+                    <ChevronRight className="transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 text-black/20" />
+                    {item.icon && <item.icon />}
+                    <span>{item.title}</span>
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    {item.items?.map((subItem) => (
+                      <SidebarMenuSubItem key={subItem.title}>
+                        <SidebarMenuSubButton asChild>
+                          <Link href={subItem.url}>
+                            <span>{subItem.title}</span>
+                          </Link>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    ))}
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
+          );
+        })}
       </SidebarMenu>
     </SidebarGroup>
   );
